@@ -85,39 +85,88 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Foto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .form-control, .form-select {
+            margin-bottom: 15px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn {
+            width: 100%;
+        }
+        .img-preview {
+            display: block;
+            max-width: 100%;
+            margin: 15px auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h3>Edit Foto</h3>
+
+<div class="container">
+    <h3 class="text-center mb-4">Edit Foto</h3>
     <form action="" method="POST" enctype="multipart/form-data">
-        <label for="judul">Judul Foto:</label>
-        <input type="text" id="judul" name="judul" value="<?php echo htmlspecialchars($foto['JudulFoto']); ?>" required><br><br>
-        
-        <label for="deskripsi">Deskripsi Foto:</label>
-        <textarea id="deskripsi" name="deskripsi" rows="4" required><?php echo htmlspecialchars($foto['DeskripsiFoto']); ?></textarea><br><br>
-        
-        <label for="tanggal">Tanggal Unggah:</label>
-        <input type="date" id="tanggal" name="tanggal" value="<?php echo htmlspecialchars($foto['TanggalUnggah']); ?>" required><br><br>
-        
-        <label for="album">Album:</label>
-        <select name="album" id="album" required>
-            <?php
-            $query = "SELECT * FROM album";
-            $result = mysqli_query($con, $query);
-            while ($row = mysqli_fetch_assoc($result)) {
-                $selected = ($row['AlbumID'] == $foto['AlbumID']) ? "selected" : "";
-                echo "<option value='{$row['AlbumID']}' $selected>{$row['NamaAlbum']}</option>";
-            }
-            ?>
-        </select><br><br>
-        
-        <label for="foto">Foto Sebelumnya:</label><br>
-        <!-- Menampilkan foto yang sudah ada -->
-        <img src="uploads/<?php echo htmlspecialchars($foto['LokasiFoto']); ?>" width="100" alt="Foto Sebelumnya"><br><br>
-        <label for="foto">Upload Foto Baru:</label><br>
-        <input type="file" id="foto" name="foto"><br><br>
-        
-        <button type="submit">Simpan Perubahan</button>
-        <a href="simpan.php">Batal</a>
+        <div class="mb-3">
+            <label for="judul" class="form-label">Judul Foto:</label>
+            <input type="text" id="judul" name="judul" class="form-control" value="<?php echo htmlspecialchars($foto['JudulFoto']); ?>" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="deskripsi" class="form-label">Deskripsi Foto:</label>
+            <textarea id="deskripsi" name="deskripsi" class="form-control" rows="4" required><?php echo htmlspecialchars($foto['DeskripsiFoto']); ?></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="tanggal" class="form-label">Tanggal Unggah:</label>
+            <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?php echo htmlspecialchars($foto['TanggalUnggah']); ?>" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="album" class="form-label">Album:</label>
+            <select name="album" id="album" class="form-select" required>
+                <?php
+                $query = "SELECT * FROM album";
+                $result = mysqli_query($con, $query);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $selected = ($row['AlbumID'] == $foto['AlbumID']) ? "selected" : "";
+                    echo "<option value='{$row['AlbumID']}' $selected>{$row['NamaAlbum']}</option>";
+                }
+                ?>
+            </select>
+        </div>
+
+        <div class="mb-3 text-center">
+            <label for="foto" class="form-label">Foto Sebelumnya:</label><br>
+            <img src="uploads/<?php echo htmlspecialchars($foto['LokasiFoto']); ?>" class="img-preview" alt="Foto Sebelumnya">
+        </div>
+
+        <div class="mb-3">
+            <label for="foto" class="form-label">Upload Foto Baru:</label>
+            <input type="file" id="foto" name="foto" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        <a href="dashboard.php" class="btn btn-secondary mt-2">Batal</a>
     </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
